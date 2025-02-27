@@ -77,11 +77,11 @@ def main():
     vwidth = vcap.get(3)  # float `width`
     vheight = vcap.get(4)  # float `height`
     fps = vcap.get(5)  # float `fps`
-    end_range = math.floor(vcap.get(cv2.CAP_PROP_FRAME_COUNT) / fps - 300)
+    end_range = math.floor(vcap.get(cv2.CAP_PROP_FRAME_COUNT) / fps)
     vcap.release()
 
     fps = math.ceil(fps)
-    opt.range = [300, end_range] if opt.range is None else opt.range
+    opt.range = [0, end_range] if opt.range is None else opt.range
     opt.range = [0, -1] if video_name == 'Od-rKbC30TM' else opt.range  # for demo
 
     if fps <= 30:
@@ -265,11 +265,11 @@ def main():
         if not batch['rgb0_is_good'].item():
             img_path0 = batch['img_path0'][0]
             if not os.path.exists(img_path0):
-                cv2.imwrite(img_path0, batch['rgb0'].squeeze(0).numpy())
+                cv2.imwrite(img_path0, cv2.cvtColor(batch['rgb0'].squeeze(0).numpy(), cv2.COLOR_RGB2BGR))
         if not batch['rgb1_is_good'].item():
             img_path1 = batch['img_path1'][0]
             if not os.path.exists(img_path1):
-                cv2.imwrite(img_path1, batch['rgb1'].squeeze(0).numpy())
+                cv2.imwrite(img_path1, cv2.cvtColor(batch['rgb1'].squeeze(0).numpy(), cv2.COLOR_RGB2BGR))
 
         current_id = np.array([idx0, idx1])
         save_name = '{}.npy'.format(str(current_id))
