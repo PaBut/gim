@@ -113,22 +113,25 @@ class WALKDataset(RGBDDataset):
                 self.path[skip].append(npz_path)
 
             ids1 = reduce(intersected, [idxs[nums > self.min_filter_matches] for nums, idxs in zip(nums[self.skips[-1]], idxs[self.skips[-1]])])
-            continue1 = np.array([x in ids1[:, 0] for x in (ids1[:, 0] + self.skips[-1] * 1)])
-            ids2 = reduce(intersected, idxs[self.skips[-2]])
-            continue2 = np.array([x in ids2[:, 0] for x in ids1[:, 0]])
-            continue2 = continue2 & np.array([x in ids2[:, 0] for x in (ids1[:, 0] + self.skips[-2] * 1)])
-            ids3 = reduce(intersected, idxs[self.skips[-3]])
-            continue3 = np.array([x in ids3[:, 0] for x in ids1[:, 0]])
-            continue3 = continue3 & np.array([x in ids3[:, 0] for x in (ids1[:, 0] + self.skips[-3] * 1)])
-            continue3 = continue3 & np.array([x in ids3[:, 0] for x in (ids1[:, 0] + self.skips[-3] * 2)])
-            continue3 = continue3 & np.array([x in ids3[:, 0] for x in (ids1[:, 0] + self.skips[-3] * 3)])
-            continues = continue1 & continue2 & continue3
-            ids = ids1[continues]
-            if ids.shape[0] == 0:
-                pair_ids = np.array([], dtype=ids.dtype)
+            if ids1.shape[0] != 0:
+                continue1 = np.array([x in ids1[:, 0] for x in (ids1[:, 0] + self.skips[-1] * 1)])
+                ids2 = reduce(intersected, idxs[self.skips[-2]])
+                continue2 = np.array([x in ids2[:, 0] for x in ids1[:, 0]])
+                continue2 = continue2 & np.array([x in ids2[:, 0] for x in (ids1[:, 0] + self.skips[-2] * 1)])
+                ids3 = reduce(intersected, idxs[self.skips[-3]])
+                continue3 = np.array([x in ids3[:, 0] for x in ids1[:, 0]])
+                continue3 = continue3 & np.array([x in ids3[:, 0] for x in (ids1[:, 0] + self.skips[-3] * 1)])
+                continue3 = continue3 & np.array([x in ids3[:, 0] for x in (ids1[:, 0] + self.skips[-3] * 2)])
+                continue3 = continue3 & np.array([x in ids3[:, 0] for x in (ids1[:, 0] + self.skips[-3] * 3)])
+                continues = continue1 & continue2 & continue3
+                ids = ids1[continues]
+                if ids.shape[0] == 0:
+                    pair_ids = np.array([], dtype=ids.dtype)
+                else:
+                    pair_ids = np.array(list(zip(ids[:, 0], np.clip(ids[:, 0]+self.step*self.skips[-1], a_min=ids[0, 0], a_max=ids[-1, 1])))) if self.step > 0 else ids
+                    pair_ids = pair_ids[(pair_ids[:, 1] - pair_ids[:, 0]) >= self.skips[-1]]
             else:
-                pair_ids = np.array(list(zip(ids[:, 0], np.clip(ids[:, 0]+self.step*self.skips[-1], a_min=ids[0, 0], a_max=ids[-1, 1])))) if self.step > 0 else ids
-                pair_ids = pair_ids[(pair_ids[:, 1] - pair_ids[:, 0]) >= self.skips[-1]]
+                pair_ids = np.array([], dtype=ids1.dtype)
         else:
             pair_ids = np.array([tuple(map(int, x.split('.npy')[0].split('_'))) for x in os.listdir(self.pproot) if x.endswith('.npy')])
 
