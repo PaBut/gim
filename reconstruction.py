@@ -56,7 +56,7 @@ def segmentation(images, segment_root, matcher_conf):
 def main(scene_name, version):
     # Setup
     scene_name = str(scene_name).replace('\r', '')
-    images = Path(f'./inputs/{scene_name}  /images')
+    images = Path(f'./inputs/{scene_name}/images')
 
     print(images.absolute())
     print(len(scene_name), [ord(c) for c in scene_name])
