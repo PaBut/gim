@@ -57,7 +57,7 @@ def main(scene_name, version):
     # Setup
     images = Path(f'inputs/{scene_name}/images')
 
-    print(images)
+    print(images.absolute())
     print(scene_name)
     print(os.getcwd())
 
