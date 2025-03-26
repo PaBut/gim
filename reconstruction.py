@@ -58,7 +58,7 @@ def main(scene_name, version):
     images = Path(f'./inputs/{scene_name}  /images')
 
     print(images.absolute())
-    print(f'./inputs/{scene_name}  /images')
+    print(len(scene_name), [ord(c) for c in scene_name])
     print(os.getcwd())
 
     outputs = Path('outputs') / scene_name / version
