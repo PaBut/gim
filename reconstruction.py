@@ -55,7 +55,7 @@ def segmentation(images, segment_root, matcher_conf):
 
 def main(scene_name, version):
     # Setup
-    images = Path('inputs') / scene_name / 'images'
+    images = Path('inputs',  scene_name, 'images')
 
     print(images)
 
