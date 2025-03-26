@@ -55,11 +55,11 @@ def segmentation(images, segment_root, matcher_conf):
 
 def main(scene_name, version):
     # Setup
-    images = os.path.join('inputs', scene_name, 'images')
+    images = Path('inputs') / scene_name / 'images'
 
-    print(str(images))
+    print(images)
 
-    outputs = os.path.join('outputs', scene_name, version)
+    outputs = Path('outputs') / scene_name / version
     outputs.mkdir(parents=True, exist_ok=True)
     os.environ['GIMRECONSTRUCTION'] = str(outputs)
 
