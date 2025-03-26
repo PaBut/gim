@@ -84,7 +84,7 @@ def main(scene_name, version):
         matcher_conf = match_features.confs[version]
     
     # Find image pairs via pair-wise image
-    exhaustive_pairs = pairs_from_exhaustive.main(image_pairs, image_list=images)
+    exhaustive_pairs = pairs_from_exhaustive.main(image_pairs, image_list=images.absolute())
 
     segmentation(images, segment_root, matcher_conf)
 
