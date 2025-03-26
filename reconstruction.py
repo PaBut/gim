@@ -57,6 +57,8 @@ def main(scene_name, version):
     # Setup
     images = Path('inputs') / scene_name / 'images'
 
+    print(str(images))
+
     outputs = Path('outputs') / scene_name / version
     outputs.mkdir(parents=True, exist_ok=True)
     os.environ['GIMRECONSTRUCTION'] = str(outputs)
