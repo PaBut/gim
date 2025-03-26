@@ -58,6 +58,7 @@ def main(scene_name, version):
     images = Path('inputs',  scene_name, 'images')
 
     print(images)
+    print(os.getcwd())
 
     outputs = Path('outputs') / scene_name / version
     outputs.mkdir(parents=True, exist_ok=True)
