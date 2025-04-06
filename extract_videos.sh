@@ -48,7 +48,7 @@ do
   printf "| %-20s | %-12s | %-10s | %-4s | %-6s | %-3s |\n" "Timestamp" "Video ID" "Method" "Skip" "Resize" "GPU"
   printf "|%s|%s|%s|%s|%s|%s|\n" "----------------------" "--------------" "------------" "------" "--------" "-----"
 
-  for skip in 0 1 2
+  for skip in 0 #1 2
   do
     for method in GIM_DKM #GIM_LOFTR GIM_GLUE SIFT
     do
